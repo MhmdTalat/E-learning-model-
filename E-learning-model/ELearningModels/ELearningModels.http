@@ -1,0 +1,6 @@
+@ELearningModels_HostAddress = http://localhost:5295
+
+GET {{ELearningModels_HostAddress}}/api/department
+Accept: application/json
+
+###

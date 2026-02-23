@@ -1,0 +1,550 @@
+/* ============================================
+   Root & Main Container
+   ============================================ */
+#root {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(to bottom, hsl(var(--background)), hsl(var(--secondary))/20);
+}
+
+/* ============================================
+   App Layout
+   ============================================ */
+.app-layout {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  gap: 0;
+}
+
+.app-sidebar {
+  width: 280px;
+  background-color: hsl(var(--sidebar-background));
+  border-right: 1px solid hsl(var(--sidebar-border));
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: all 0.4s ease;
+  box-shadow: inset -1px 0 0 hsl(var(--border)/20);
+}
+
+.app-sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.app-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.app-sidebar::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 4px;
+}
+
+.app-sidebar::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--border)/80);
+}
+
+.app-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  background: hsl(var(--background));
+}
+
+.app-header {
+  background-color: hsl(var(--card));
+  border-bottom: 1px solid hsl(var(--border)/50);
+  padding: 1.25rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  box-shadow: 0 2px 8px hsl(var(--foreground)/5);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  backdrop-filter: blur(10px);
+  background-color: hsl(var(--card)/95);
+}
+
+.app-content {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--secondary))/30 100%);
+}
+
+.app-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.app-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.app-content::-webkit-scrollbar-thumb {
+  background: hsl(var(--border)/50);
+  border-radius: 4px;
+}
+
+.app-content::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--border)/70);
+}
+
+/* ============================================
+   Responsive Mobile Menu
+   ============================================ */
+.menu-toggle {
+  display: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: hsl(var(--foreground));
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+}
+
+.menu-toggle:hover {
+  background-color: hsl(var(--secondary));
+}
+
+@media (max-width: 768px) {
+  .app-sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 250px;
+    z-index: 50;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: inset -1px 0 0 hsl(var(--border));
+  }
+
+  .app-sidebar.open {
+    transform: translateX(0);
+    box-shadow: 4px 0 16px hsl(var(--foreground)/20);
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  .app-content {
+    padding: 1.5rem 1rem;
+  }
+
+  .app-header {
+    padding: 1rem;
+    gap: 1rem;
+  }
+}
+
+/* ============================================
+   Navigation Styles
+   ============================================ */
+.nav-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+}
+
+.nav-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.nav-section-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: hsl(var(--muted-foreground));
+  padding: 0.75rem 1rem;
+  margin-top: 0.5rem;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.625rem;
+  color: hsl(var(--sidebar-foreground));
+  text-decoration: none;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  font-size: 0.95rem;
+  cursor: pointer;
+  position: relative;
+}
+
+.nav-item:hover {
+  background-color: hsl(var(--sidebar-accent));
+  color: hsl(var(--sidebar-accent-foreground));
+  padding-left: 1.25rem;
+}
+
+.nav-item.active {
+  background-color: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
+  font-weight: 600;
+  box-shadow: 0 4px 12px hsl(var(--accent)/30);
+}
+
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background-color: hsl(var(--accent-foreground));
+  border-radius: 0 4px 4px 0;
+}
+
+/* ============================================
+   Cards & Containers
+   ============================================ */
+.container-card {
+  background-color: hsl(var(--card));
+  border: 1px solid hsl(var(--border)/50);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px hsl(var(--foreground)/5);
+  transition: all 0.3s ease;
+  background: linear-gradient(135deg, hsl(var(--card)), hsl(var(--secondary))/20);
+}
+
+.container-card:hover {
+  box-shadow: 0 12px 32px hsl(var(--foreground)/10);
+  border-color: hsl(var(--accent)/50);
+  transform: translateY(-2px);
+}
+
+.container-card-tight {
+  padding: 1rem;
+}
+
+.container-card-loose {
+  padding: 2rem;
+}
+
+/* ============================================
+   Tables
+   ============================================ */
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 1rem;
+  border: 1px solid hsl(var(--border)/50);
+  box-shadow: 0 1px 3px hsl(var(--foreground)/5);
+  background: hsl(var(--card));
+}
+
+.table-element {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-element thead {
+  background: linear-gradient(to right, hsl(var(--secondary)), hsl(var(--secondary))/80));
+  font-weight: 600;
+  color: hsl(var(--secondary-foreground));
+}
+
+.table-element thead th {
+  padding: 1.25rem;
+  text-align: left;
+  color: hsl(var(--secondary-foreground));
+  border-bottom: 2px solid hsl(var(--border)/50);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.table-element tbody tr {
+  border-bottom: 1px solid hsl(var(--border)/30);
+  transition: all 0.2s ease;
+}
+
+.table-element tbody tr:hover {
+  background-color: hsl(var(--secondary)/50);
+  box-shadow: inset 0 0 8px hsl(var(--accent)/10);
+}
+
+.table-element tbody tr:last-child {
+  border-bottom: none;
+}
+
+.table-element tbody td {
+  padding: 1rem 1.25rem;
+  color: hsl(var(--foreground));
+  vertical-align: middle;
+}
+
+/* ============================================
+   Forms & Inputs
+   ============================================ */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  font-weight: 600;
+  color: hsl(var(--foreground));
+  font-size: 0.95rem;
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 1.5px solid hsl(var(--input)/50);
+  border-radius: 0.75rem;
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+  outline: none;
+  border-color: hsl(var(--accent));
+  box-shadow: 0 0 0 3px hsl(var(--accent)/15);
+  background-color: hsl(var(--background));
+}
+
+.form-input::placeholder {
+  color: hsl(var(--muted-foreground)/60);
+}
+
+/* ============================================
+   Badges & Pills
+   ============================================ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.875rem;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  border: 1px solid;
+}
+
+.badge-primary {
+  background-color: hsl(var(--primary)/12);
+  color: hsl(var(--primary));
+  border-color: hsl(var(--primary)/30);
+}
+
+.badge-success {
+  background-color: hsl(var(--success)/12);
+  color: hsl(var(--success));
+  border-color: hsl(var(--success)/30);
+}
+
+.badge-warning {
+  background-color: hsl(var(--warning)/12);
+  color: hsl(var(--warning));
+  border-color: hsl(var(--warning)/30);
+}
+
+.badge-destructive {
+  background-color: hsl(var(--destructive)/12);
+  color: hsl(var(--destructive));
+  border-color: hsl(var(--destructive)/30);
+}
+
+.badge-accent {
+  background-color: hsl(var(--accent)/12);
+  color: hsl(var(--accent));
+  border-color: hsl(var(--accent)/30);
+}
+
+/* ============================================
+   Buttons
+   ============================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border: none;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+  text-decoration: none;
+  display: inline-flex;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.btn-lg {
+  padding: 0.875rem 1.75rem;
+  font-size: 1rem;
+}
+
+.btn-sm {
+  padding: 0.45rem 0.875rem;
+  font-size: 0.85rem;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--accent)/90));
+  color: hsl(var(--accent-foreground));
+  box-shadow: 0 4px 12px hsl(var(--accent)/30);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, hsl(var(--accent)/95), hsl(var(--accent)/85));
+  box-shadow: 0 8px 24px hsl(var(--accent)/40);
+  transform: translateY(-2px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px hsl(var(--accent)/30);
+}
+
+.btn-secondary {
+  background-color: hsl(var(--secondary));
+  color: hsl(var(--secondary-foreground));
+  border: 1px solid hsl(var(--border));
+}
+
+.btn-secondary:hover {
+  background-color: hsl(var(--secondary)/80);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px hsl(var(--foreground)/10);
+}
+
+.btn-outline {
+  border: 2px solid hsl(var(--accent)/50);
+  color: hsl(var(--accent));
+  background-color: transparent;
+}
+
+.btn-outline:hover {
+  background-color: hsl(var(--accent)/10);
+  border-color: hsl(var(--accent));
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px hsl(var(--accent)/20);
+}
+
+.btn-ghost {
+  color: hsl(var(--accent));
+  background-color: transparent;
+}
+
+.btn-ghost:hover {
+  background-color: hsl(var(--accent)/10);
+}
+
+/* ============================================
+   Sections & Content
+   ============================================ */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.section-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  border-bottom: 2px solid hsl(var(--border)/50);
+  padding-bottom: 1.5rem;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: hsl(var(--foreground));
+  letter-spacing: -0.02em;
+}
+
+.section-description {
+  font-size: 1rem;
+  color: hsl(var(--muted-foreground));
+  line-height: 1.6;
+}
+
+/* ============================================
+   Grid Layouts
+   ============================================ */
+.grid-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  auto-rows: max-content;
+}
+
+@media (max-width: 768px) {
+  .grid-cards {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+/* ============================================
+   Utilities
+   ============================================ */
+.divider {
+  height: 1px;
+  background: linear-gradient(to right, hsl(var(--border)/0), hsl(var(--border)), hsl(var(--border)/0));
+}
+
+.vh-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.text-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.text-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

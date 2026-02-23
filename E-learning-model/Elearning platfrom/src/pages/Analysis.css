@@ -1,0 +1,187 @@
+/* Analysis page - matches app theme */
+.analysis-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 3rem;
+  min-height: 300px;
+  color: #8b92a8;
+}
+
+.analysis-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(91, 124, 255, 0.15);
+  border-top-color: #5b7cff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.5s ease-out;
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.analysis-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.analysis-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.analysis-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(91, 124, 255, 0.5), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.analysis-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(91, 124, 255, 0.3);
+  box-shadow: 0 12px 32px rgba(91, 124, 255, 0.15);
+}
+
+.analysis-card:hover::before {
+  opacity: 1;
+}
+
+.analysis-card-wide {
+  grid-column: 1 / -1;
+}
+
+.analysis-card-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  display: inline-block;
+  padding: 0.75rem;
+  border-radius: 8px;
+  background: rgba(91, 124, 255, 0.1);
+}
+
+.analysis-card h6 {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #8b92a8;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0 0 0.75rem 0;
+}
+
+.analysis-card h6:first-of-type {
+  margin-top: 0;
+}
+
+.analysis-value {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #e8eaf0;
+  margin: 0.5rem 0 0.25rem 0;
+  letter-spacing: -0.01em;
+}
+
+.analysis-meta {
+  font-size: 0.8rem;
+  color: #8b92a8;
+  margin: 0.5rem 0 0 0;
+}
+
+.analysis-pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  margin: 1rem 0 0 0;
+  padding: 1rem;
+  font-size: 0.75rem;
+  color: #a8aebf;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Chart Styling */
+.analysis-card svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.recharts-wrapper {
+  margin: 1rem 0 0 0;
+}
+
+.recharts-text {
+  font-family: 'Inter', sans-serif;
+}
+
+.recharts-cartesian-axis-tick-value {
+  fill: #8b92a8 !important;
+  font-size: 12px !important;
+}
+
+.recharts-tooltip-wrapper {
+  outline: none !important;
+}
+
+.recharts-legend-wrapper {
+  padding-top: 1rem !important;
+}
+
+.recharts-legend-item-text {
+  color: #a8aebf !important;
+  font-size: 12px !important;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
