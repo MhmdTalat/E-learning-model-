@@ -1,4 +1,4 @@
-# SchoolHoldDotnet API
+# E-learning-model API
 
 A simple and maintainable **ASP.NET Core Web API** for managing school data, including departments, instructors, courses, and enrollments.  
 Built with **.NET 8** and **Entity Framework Core** for database interactions.
