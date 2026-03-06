@@ -38,6 +38,10 @@ namespace ELearningModels.model
         public int? DepartmentID { get; set; }
         public virtual Department? Department { get; set; }
 
+        // Advisor/Mentor Instructor
+        public int? AdvisorInstructorID { get; set; }
+        public virtual Instructor? AdvisorInstructor { get; set; }
+
         // Refresh Token Management
         public string? RefreshToken { get; set; }
         public DateTime? RefreshTokenExpiryTime { get; set; }

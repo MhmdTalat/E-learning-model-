@@ -17,5 +17,10 @@ namespace ELearningModels.Iservice
         Task<List<Course>> GetAvailableCoursesAsync(int instructorId);
         Task AssignCourseAsync(int instructorId, int courseId);
         Task RemoveEnrollmentAsync(int instructorId, int courseId);
+
+        // ===== Student assignment (advisor/mentor) =====
+        Task AssignInstructorToStudentAsync(int instructorId, int studentId);
+        Task RemoveInstructorFromStudentAsync(int instructorId, int studentId);
+        Task<List<ApplicationUser>> GetAdvisedStudentsAsync(int instructorId);
     }
 }

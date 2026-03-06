@@ -30,6 +30,9 @@ namespace ELearningModels.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("TEXT");
 
+                    b.Property<int?>("AdvisorInstructorID")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Bio")
                         .HasMaxLength(500)
                         .HasColumnType("TEXT");
@@ -115,6 +118,8 @@ namespace ELearningModels.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AdvisorInstructorID");
 
                     b.HasIndex("DepartmentID");
 
@@ -406,10 +411,16 @@ namespace ELearningModels.Migrations
 
             modelBuilder.Entity("ELearningModels.model.ApplicationUser", b =>
                 {
+                    b.HasOne("ELearningModels.model.Instructor", "AdvisorInstructor")
+                        .WithMany("AdvisedStudents")
+                        .HasForeignKey("AdvisorInstructorID");
+
                     b.HasOne("ELearningModels.model.Department", "Department")
                         .WithMany("Students")
                         .HasForeignKey("DepartmentID")
                         .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("AdvisorInstructor");
 
                     b.Navigation("Department");
                 });
@@ -568,6 +579,8 @@ namespace ELearningModels.Migrations
 
             modelBuilder.Entity("ELearningModels.model.Instructor", b =>
                 {
+                    b.Navigation("AdvisedStudents");
+
                     b.Navigation("CourseInstructors");
 
                     b.Navigation("DepartmentsAdministered");

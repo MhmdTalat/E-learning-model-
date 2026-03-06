@@ -24,6 +24,20 @@ export interface InstructorCreatePayload {
   roleType?: number;
 }
 
+export interface Course {
+  courseID: string;
+  courseName: string;
+  courseCode?: string;
+  description?: string;
+}
+
+export interface Student {
+  studentID: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+}
+
 export const getInstructors = (): Promise<Instructor[]> => {
   return client.get("/api/instructor")
     .then(res => res.data);
@@ -31,6 +45,26 @@ export const getInstructors = (): Promise<Instructor[]> => {
 
 export const getInstructorById = (id: string): Promise<Instructor> => {
   return client.get(`/api/instructor/${id}`)
+    .then(res => res.data);
+};
+
+export const getInstructorCourses = (id: string): Promise<Course[]> => {
+  return client.get(`/api/instructor/${id}/courses`)
+    .then(res => res.data);
+};
+
+export const getAdvisedStudents = (id: string): Promise<Student[]> => {
+  return client.get(`/api/instructor/${id}/advised-students`)
+    .then(res => res.data);
+};
+
+export const assignInstructorToStudent = (instructorId: string, studentId: string): Promise<void> => {
+  return client.post(`/api/instructor/${instructorId}/assign-student/${studentId}`)
+    .then(res => res.data);
+};
+
+export const removeInstructorFromStudent = (instructorId: string, studentId: string): Promise<void> => {
+  return client.delete(`/api/instructor/${instructorId}/remove-student/${studentId}`)
     .then(res => res.data);
 };
 

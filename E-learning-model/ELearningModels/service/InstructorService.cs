@@ -135,5 +135,48 @@ namespace ELearningModels.service
                 await _context.SaveChangesAsync();
             }
         }
+
+        // ------------------- Student Assignment (Advisor/Mentor) -------------------
+
+        /// <summary>Assign an instructor as an advisor/mentor to a student.</summary>
+        public async Task AssignInstructorToStudentAsync(int instructorId, int studentId)
+        {
+            var instructor = await _context.Instructors.FindAsync(instructorId);
+            if (instructor == null)
+                throw new ArgumentException($"Instructor with ID {instructorId} not found.");
+
+            var student = await _context.Users.FindAsync(studentId);
+            if (student == null)
+                throw new ArgumentException($"Student with ID {studentId} not found.");
+
+            student.AdvisorInstructorID = instructorId;
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>Remove an instructor as an advisor/mentor from a student.</summary>
+        public async Task RemoveInstructorFromStudentAsync(int instructorId, int studentId)
+        {
+            var student = await _context.Users.FindAsync(studentId);
+            if (student == null)
+                throw new ArgumentException($"Student with ID {studentId} not found.");
+
+            if (student.AdvisorInstructorID == instructorId)
+            {
+                student.AdvisorInstructorID = null;
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        /// <summary>Get all students advised/mentored by an instructor.</summary>
+        public async Task<List<ApplicationUser>> GetAdvisedStudentsAsync(int instructorId)
+        {
+            var instructor = await _context.Instructors.FindAsync(instructorId);
+            if (instructor == null)
+                throw new ArgumentException($"Instructor with ID {instructorId} not found.");
+
+            return await _context.Users
+                .Where(u => u.AdvisorInstructorID == instructorId)
+                .ToListAsync();
+        }
     }
 }

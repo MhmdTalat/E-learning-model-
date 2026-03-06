@@ -99,5 +99,54 @@ namespace ELearningModels.Controllers
             await _service.RemoveEnrollmentAsync(id, courseId);
             return Ok(new { message = "Course removed successfully" });
         }
+
+        // ------------------- Student Assignment -------------------
+
+        [HttpPost("{id}/assign-student/{studentId}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> AssignStudentToInstructor(int id, int studentId)
+        {
+            try
+            {
+                await _service.AssignInstructorToStudentAsync(id, studentId);
+                return Ok(new { message = "Instructor assigned to student successfully" });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpDelete("{id}/remove-student/{studentId}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> RemoveStudentFromInstructor(int id, int studentId)
+        {
+            try
+            {
+                await _service.RemoveInstructorFromStudentAsync(id, studentId);
+                return Ok(new { message = "Instructor removed from student successfully" });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpGet("{id}/advised-students")]
+        [Authorize(Roles = "Admin,Instructor")]
+        public async Task<IActionResult> GetAdvisedStudents(int id)
+        {
+            try
+            {
+                var students = await _service.GetAdvisedStudentsAsync(id);
+                if (!students.Any()) return Ok(new List<ApplicationUser>());
+
+                return Ok(students);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
     }
 }

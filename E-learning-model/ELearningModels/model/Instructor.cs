@@ -33,5 +33,8 @@ namespace ELearningModels.model
      = new List<CourseInstructor>();
         public OfficeAssignment? OfficeAssignment { get; set; }
         public ICollection<Department> DepartmentsAdministered { get; set; } = new List<Department>();
+
+        // Relationship: Instructor can mentor/advise many students
+        public ICollection<ApplicationUser> AdvisedStudents { get; set; } = new List<ApplicationUser>();
     }
 }
